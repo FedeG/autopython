@@ -16,12 +16,14 @@ setup(
 
   packages = ['autopython'],
   scripts = ['bin/autopython'],
-  
+
   install_requires = [
     'colorama',
     'Pygments',
+    'ipython',
+    'click'
   ],
-  
+
   url = 'https://github.com/gosella/autopython',
   download_url = 'https://github.com/gosella/autopython',
 
@@ -29,7 +31,7 @@ setup(
   author_email = 'german.osella@nexo.unnoba.edu.ar',
   maintainer = 'Germán Osella Massa',
   maintainer_email = 'german.osella@nexo.unnoba.edu.ar',
-  
-  keywords = ['python3', 'presentation', 'autoscripting'],
+
+  keywords = ['python3', 'presentation', 'autoscripting', 'ipython'],
   classifiers = [],
 )
