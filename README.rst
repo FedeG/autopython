@@ -54,7 +54,7 @@ Usar logging de comandos y retornos
 	$ autopython --logging tutorial.py
 
 
-Usat logging en archivo determinado
+Usar logging en archivo determinado
 
 .. code-block:: bash
 
@@ -65,7 +65,7 @@ Usat logging en archivo determinado
 	$ autopython tutorial.py tutorial.log
 
 
-Configurar tiempo de entre letras
+Configurar tiempo entre letras
 
 .. code-block:: bash
 
@@ -85,6 +85,8 @@ Mas opciones:
 	$ autopython --version
 
 
+Mas detalles
+------------
 
 El script dado deberá contener cada una de las sentencias o fragmentos de código a mostrar y esta herramienta se encargará de simular durante una presentación el ingreso de cada una de esas sentencias, como si se las estuviera escribiendo directamente en el propio shell de Python.
 
