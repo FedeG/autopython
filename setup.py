@@ -1,22 +1,35 @@
 from setuptools import setup
+
+import autopython
+import codecs
+
+with codecs.open('README.rst', encoding='utf-8') as readme_file:
+    long_description = readme_file.read()
+
 setup(
   name = 'autopython',
-  packages = ['autopython'],
-  version = '0.1',
+  version = autopython.__version__,
+  license = 'GPLv3',
+
   description = 'Autoscripting for Python 3',
-  author = 'Germán Osella Massa',
-  author_email = 'german.osella@nexo.unnoba.edu.ar',
+  long_description = long_description,
+
+  packages = ['autopython'],
+  scripts = ['bin/autopython'],
+  
+  install_requires = [
+    'colorama',
+    'Pygments',
+  ],
+  
   url = 'https://github.com/gosella/autopython',
   download_url = 'https://github.com/gosella/autopython',
-  keywords = ['python3', 'presentation', 'autoscripting'],
-  classifiers = [],
-  scripts = ['bin/autopython'],
+
+  author = 'Germán Osella Massa',
+  author_email = 'german.osella@nexo.unnoba.edu.ar',
   maintainer = 'Germán Osella Massa',
   maintainer_email = 'german.osella@nexo.unnoba.edu.ar',
-  data_files = ['autopython/core.py', 'autopython/console.py', 'autopython/script_parser.py'],
-  license = "GPLv3",
-  install_requires=[
-    "colorama",
-    "Pygments",
-  ],
+  
+  keywords = ['python3', 'presentation', 'autoscripting'],
+  classifiers = [],
 )

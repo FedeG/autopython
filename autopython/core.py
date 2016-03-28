@@ -20,6 +20,8 @@ from pygments.lexers import PythonConsoleLexer, Python3TracebackLexer
 
 from IPython.terminal.embed import InteractiveShellEmbed
 
+__version__ = '0.3'
+
 colorama.init()
 
 TERMINAL_COLORS = {
