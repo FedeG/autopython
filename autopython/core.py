@@ -5,7 +5,6 @@ import io
 import os
 import sys
 import time
-import click
 import random
 import colorama
 

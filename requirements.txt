@@ -1,2 +1,4 @@
 colorama
 Pygments
+ipython
+click
