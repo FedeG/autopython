@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import colorama
 import io
 import os
-import random
 import sys
 import time
+import click
+import random
+import colorama
 
-from autopython import console, script_parser
-from code import InteractiveInterpreter
 from datetime import datetime
+from code import InteractiveInterpreter
+from autopython import console, script_parser
 
 from pygments import highlight
 from pygments.token import Token
-from pygments.lexers import PythonConsoleLexer, Python3TracebackLexer
 from pygments.console import ansiformat
 from pygments.formatters import TerminalFormatter
+from pygments.lexers import PythonConsoleLexer, Python3TracebackLexer
 
+from IPython.terminal.embed import InteractiveShellEmbed
 
 colorama.init()
 
@@ -112,13 +114,19 @@ class PresenterInterpreter(InteractiveInterpreter):
         except (OverflowError, SyntaxError, ValueError):
             self.showsyntaxerror(filename)
             return False, None
-
         return code is None, code
 
 
-class HighlightingInterpreter(PresenterInterpreter):
+class IpythonPresenterInterpreter(InteractiveShellEmbed, PresenterInterpreter):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        InteractiveShellEmbed.__init__(self, *args, **kwargs)
+        PresenterInterpreter.__init__(self, *args, **kwargs)
+        self.locals.update(self.user_ns)
+        self.locals.update(self.user_global_ns)
+
+
+class HighlightingInterpreterBase():
+    def __init__(self, *args, **kwargs):
         self._lexer = Python3TracebackLexer()
         colorscheme = {token: (color, color) for token, color in TERMINAL_COLORS.items()}
         self._formatter = TerminalFormatter(colorscheme=colorscheme)
@@ -134,11 +142,23 @@ class HighlightingInterpreter(PresenterInterpreter):
         sys.stderr.write(highlight(output, self._lexer, self._formatter))
         sys.stderr.flush()
 
-    def showtraceback(self):
-        self.highlight_error(super().showtraceback)
+    def showtraceback(self, *args, **kwargs):
+        self.highlight_error(super().showtraceback, *args, **kwargs)
 
-    def showsyntaxerror(self, filename):
-        self.highlight_error(super().showsyntaxerror, filename)
+    def showsyntaxerror(self, filename, *args, **kwargs):
+        self.highlight_error(super().showsyntaxerror, filename, *args, **kwargs)
+
+
+class IpythonHighlightingInterpreter(HighlightingInterpreterBase, IpythonPresenterInterpreter):
+    def __init__(self, *args, **kwargs):
+        HighlightingInterpreterBase.__init__(self, *args, **kwargs)
+        IpythonPresenterInterpreter.__init__(self, *args, **kwargs)
+
+
+class HighlightingInterpreter(HighlightingInterpreterBase, PresenterInterpreter):
+    def __init__(self, *args, **kwargs):
+        HighlightingInterpreterBase.__init__(self, *args, **kwargs)
+        PresenterInterpreter.__init__(self, *args, **kwargs)
 
 
 def lower_upper_key(char):
@@ -156,9 +176,9 @@ class Presenter(object):
     KEY_EXIT = lower_upper_key('q')
 
     def __init__(self, filename, output=None, width=0, colors=True,
-                 animation=True, typing_delay=40, logging=False):
+                 animation=True, typing_delay=40, logging=False, use_ipython=False):
         self.output = output or sys.stdout
-
+        self.use_ipython = use_ipython
         if width < 1:
             width = console.getwidth()
 
@@ -191,7 +211,10 @@ class Presenter(object):
         self.load_file(filename)
 
     def reset_interpreter(self):
-        self.interpreter = HighlightingInterpreter() if self.colors else PresenterInterpreter()
+        if self.use_ipython:
+            self.interpreter = IpythonHighlightingInterpreter() if self.colors else IpythonPresenterInterpreter()
+        else:
+            self.interpreter = HighlightingInterpreter() if self.colors else PresenterInterpreter()
         self.ns = self.interpreter.locals
         self.ns.update(PRESENTER=self)
         self._code_to_execute = None
@@ -516,6 +539,5 @@ class Presenter(object):
 
 
 if __name__ == '__main__':
-    presenter = Presenter(sys.argv[1], width=console.getwidth(),
-                          colors=True, animation=True, logging=True)
+    presenter = Presenter(sys.argv[1], logging=True)
     presenter.run()
