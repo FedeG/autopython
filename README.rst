@@ -22,6 +22,8 @@ AutoPython tiene como dependencias los siguientes módulos:
 
 - Colorama_
 - Pygments_
+- ipython_
+- click_
 
 
 Como usar AutoPython:
@@ -32,6 +34,56 @@ Simplemente ejecutándolo dándole como parámetro el nombre el archivo fuente q
 .. code-block:: bash
 
 	$ autopython tutorial.py
+
+
+Usar Ipython
+
+.. code-block:: bash
+
+	$ autopython -i tutorial.py
+	# OR
+	$ autopython --ipython tutorial.py
+
+
+Usar logging de comandos y retornos
+
+.. code-block:: bash
+
+	$ autopython -l tutorial.py
+	# OR
+	$ autopython --logging tutorial.py
+
+
+Usat logging en archivo determinado
+
+.. code-block:: bash
+
+	$ autopython -l tutorial.py tutorial.log
+	# OR
+	$ autopython --logging tutorial.py tutorial.log
+	# OR
+	$ autopython tutorial.py tutorial.log
+
+
+Configurar tiempo de entre letras
+
+.. code-block:: bash
+
+	$ autopython -d 20 tutorial.py
+	# OR
+	$ autopython --delay 20 tutorial.py
+
+
+Mas opciones:
+
+.. code-block:: bash
+
+    # Ver help de autopython
+	$ autopython --help
+
+    # Ver version de autopython
+	$ autopython --version
+
 
 
 El script dado deberá contener cada una de las sentencias o fragmentos de código a mostrar y esta herramienta se encargará de simular durante una presentación el ingreso de cada una de esas sentencias, como si se las estuviera escribiendo directamente en el propio shell de Python.
@@ -69,8 +121,6 @@ AutoPython es multiplataforma y debería funcionar tanto sobre Windows como Mac 
 Cosas por hacer:
 ----------------
 
-- Agregar parámetros para la línea de comandos que permitan configurar las opciones disponibles.
-- Separar la lógica de la presentación, para poder simular/utilizar otros shells (consola de IPython, te estoy mirando...).
 - Más temas de colores para el resaltado de sintaxis.
 - English translation.
 - ???
@@ -86,4 +136,6 @@ Copyright Germán Osella Massa 2016. Licencia GPLv3. Ver archivo `LICENSE.txt`_.
 .. _pip: http://www.pip-installer.org/
 .. _Colorama: https://github.com/tartley/colorama
 .. _Pygments: http://pygments.org/
+.. _click: http://click.pocoo.org/
+.. _ipython:: https://ipython.org/
 .. _LICENSE.txt: https://github.com/gosella/autopython/blob/master/LICENSE.txt
