@@ -16,6 +16,7 @@ setup(
 
   packages = ['autopython'],
   scripts = ['bin/autopython'],
+  data_files = ['autopython/core.py', 'autopython/console.py', 'autopython/script_parser.py'],
 
   install_requires = [
     'colorama',

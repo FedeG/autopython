@@ -1,1 +1,1 @@
-from .core import Presenter, __version__
+from autopython.core import Presenter, __version__

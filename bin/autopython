@@ -2,14 +2,14 @@
 
 import sys
 import click
-from autopython.core import Presenter
+from autopython import __version__ as version, Presenter
 from pkg_resources import get_distribution
 
 
 def print_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
-    click.echo('Version: ' + get_distribution("autopython").version)
+    click.echo('Version: ' + str(version))
     ctx.exit()
 
 
