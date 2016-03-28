@@ -22,8 +22,8 @@ AutoPython tiene como dependencias los siguientes módulos:
 
 - Colorama_
 - Pygments_
-- ipython_
-- click_
+- Ipython_
+- Click_
 
 
 Como usar AutoPython:
@@ -136,6 +136,6 @@ Copyright Germán Osella Massa 2016. Licencia GPLv3. Ver archivo `LICENSE.txt`_.
 .. _pip: http://www.pip-installer.org/
 .. _Colorama: https://github.com/tartley/colorama
 .. _Pygments: http://pygments.org/
-.. _click: http://click.pocoo.org/
-.. _ipython:: https://ipython.org/
+.. _Click: http://click.pocoo.org/
+.. _Ipython: https://ipython.org/
 .. _LICENSE.txt: https://github.com/gosella/autopython/blob/master/LICENSE.txt
