@@ -181,7 +181,7 @@ class Presenter(object):
     KEY_SHELL = lower_upper_key('s')
     KEY_EXIT = lower_upper_key('q')
 
-    def __init__(self, filename, output=None, width=0, colors=True,
+    def __init__(self, filename, log_file=None, output=None, width=0, colors=True,
                  animation=True, typing_delay=40, logging=False, use_ipython=False):
         self.output = output or sys.stdout
         self.use_ipython = use_ipython
@@ -190,9 +190,10 @@ class Presenter(object):
 
         self.logging = logging
         if logging:
-            time = datetime.now().strftime('-%Y-%m-%d')
-            log_name = os.path.splitext(filename)[0] + time + '.log'
-            self.logger = open(log_name, 'at')
+            if not log_file:
+                time = datetime.now().strftime('-%Y-%m-%d')
+                log_file = os.path.splitext(filename)[0] + time + '.log'
+            self.logger = open(log_file, 'at')
             self.logger.write('\n')
             init_msg = '=====  AutoPython initiated  ====='
             bar = '=' * len(init_msg)
