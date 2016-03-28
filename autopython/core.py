@@ -188,8 +188,8 @@ class Presenter(object):
         if width < 1:
             width = console.getwidth()
 
-        self.logging = logging
-        if logging:
+        if logging or log_file:
+            logging = True
             if not log_file:
                 time = datetime.now().strftime('-%Y-%m-%d')
                 log_file = os.path.splitext(filename)[0] + time + '.log'
@@ -199,6 +199,7 @@ class Presenter(object):
             bar = '=' * len(init_msg)
             self.log(bar, init_msg, bar)
 
+        self.logging = logging
         self.colors = colors
         self.animation = animation
         self.typing_delay = typing_delay
