@@ -124,6 +124,11 @@ class IpythonPresenterInterpreter(InteractiveShellEmbed, PresenterInterpreter):
         PresenterInterpreter.__init__(self, *args, **kwargs)
         self.locals.update(self.user_ns)
         self.locals.update(self.user_global_ns)
+        self.user_global_ns['exit'] = self.exit
+        self.user_global_ns['quit'] = self.exit
+
+    def exit(self):
+        print('Use Ctrl-D (i.e. EOF) to exit')
 
 
 class HighlightingInterpreterBase():
@@ -540,5 +545,5 @@ class Presenter(object):
 
 
 if __name__ == '__main__':
-    presenter = Presenter(sys.argv[1], logging=True)
+    presenter = Presenter(sys.argv[1], logging=True, use_ipython=True)
     presenter.run()
